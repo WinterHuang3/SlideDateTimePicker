@@ -30,6 +30,8 @@ public class SlideDateTimePicker
     private boolean mIs24HourTime;
     private int mTheme;
     private int mIndicatorColor;
+    private int mTabCount;
+    private String mTitleResouce;
 
     /**
      * Creates a new instance of {@code SlideDateTimePicker}.
@@ -64,6 +66,18 @@ public class SlideDateTimePicker
     public void setListener(SlideDateTimeListener listener)
     {
         mListener = listener;
+    }
+    /**
+     * <p>Sets the titleResouce that is used to inform the client when
+     * the user selects a new date and time.</p>
+     *
+     * <p>This must be called before {@link #show()}.</p>
+     *
+     * @param titleResouce
+     */
+    public void setTitle(String titleResouce)
+    {
+        mTitleResouce = titleResouce;
     }
 
     /**
@@ -152,6 +166,15 @@ public class SlideDateTimePicker
     {
         mIndicatorColor = indicatorColor;
     }
+    /**
+     * Sets the color of the underline for the currently selected tab.
+     *
+     * @param tabCount  the color of the selected tab's underline
+     */
+    public void setTabCount(int tabCount)
+    {
+        mTabCount = tabCount;
+    }
 
     /**
      * Shows the dialog to the user. Make sure to call
@@ -179,7 +202,10 @@ public class SlideDateTimePicker
                         mIsClientSpecified24HourTime,
                         mIs24HourTime,
                         mTheme,
-                        mIndicatorColor);
+                        mIndicatorColor,
+                        mTitleResouce,
+                        mTabCount
+                );
 
         dialogFragment.show(mFragmentManager,
                 SlideDateTimeDialogFragment.TAG_SLIDE_DATE_TIME_DIALOG_FRAGMENT);
@@ -201,8 +227,10 @@ public class SlideDateTimePicker
         private Date maxDate;
         private boolean isClientSpecified24HourTime;
         private boolean is24HourTime;
+        private String title;
         private int theme;
         private int indicatorColor;
+        private int tabCount;
 
         public Builder(FragmentManager fm)
         {
@@ -224,6 +252,14 @@ public class SlideDateTimePicker
         public Builder setInitialDate(Date initialDate)
         {
             this.initialDate = initialDate;
+            return this;
+        }
+        /**
+         * @see SlideDateTimePicker#setInitialDate(Date)
+         */
+        public Builder setTabCount(int tabCount)
+        {
+            this.tabCount = tabCount;
             return this;
         }
 
@@ -272,6 +308,14 @@ public class SlideDateTimePicker
             this.indicatorColor = indicatorColor;
             return this;
         }
+        /**
+         * @see SlideDateTimePicker#setTitle(String)
+         */
+        public Builder setTitle( String title)
+        {
+            this.title = title;
+            return this;
+        }
 
         /**
          * <p>Build and return a {@code SlideDateTimePicker} object based on the previously
@@ -290,8 +334,10 @@ public class SlideDateTimePicker
             picker.setMaxDate(maxDate);
             picker.setIsClientSpecified24HourTime(isClientSpecified24HourTime);
             picker.setIs24HourTime(is24HourTime);
+            picker.setTitle(title);
             picker.setTheme(theme);
             picker.setIndicatorColor(indicatorColor);
+            picker.setTabCount(tabCount);
 
             return picker;
         }

@@ -9,6 +9,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -41,6 +43,7 @@ public class SlideDateTimeDialogFragment extends DialogFragment implements DateF
 
     private Context mContext;
     private CustomViewPager mViewPager;
+    private TextView mTitle;
     private ViewPagerAdapter mViewPagerAdapter;
     private SlidingTabLayout mSlidingTabLayout;
     private View mButtonHorizontalDivider;
@@ -49,7 +52,9 @@ public class SlideDateTimeDialogFragment extends DialogFragment implements DateF
     private Button mCancelButton;
     private Date mInitialDate;
     private int mTheme;
+    private int mTabCount;
     private int mIndicatorColor;
+    private String mTitleResouce;
     private Date mMinDate;
     private Date mMaxDate;
     private boolean mIsClientSpecified24HourTime;
@@ -82,9 +87,8 @@ public class SlideDateTimeDialogFragment extends DialogFragment implements DateF
      * @return
      */
     public static SlideDateTimeDialogFragment newInstance(SlideDateTimeListener listener,
-            Date initialDate, Date minDate, Date maxDate, boolean isClientSpecified24HourTime,
-            boolean is24HourTime, int theme, int indicatorColor)
-    {
+                                                          Date initialDate, Date minDate, Date maxDate, boolean isClientSpecified24HourTime,
+                                                          boolean is24HourTime, int theme, int indicatorColor,String titleResouce,int tabCount) {
         mListener = listener;
 
         // Create a new instance of SlideDateTimeDialogFragment
@@ -98,7 +102,9 @@ public class SlideDateTimeDialogFragment extends DialogFragment implements DateF
         bundle.putBoolean("isClientSpecified24HourTime", isClientSpecified24HourTime);
         bundle.putBoolean("is24HourTime", is24HourTime);
         bundle.putInt("theme", theme);
+        bundle.putInt("tabCount", tabCount);
         bundle.putInt("indicatorColor", indicatorColor);
+        bundle.putString("titleResouce", titleResouce);
         dialogFragment.setArguments(bundle);
 
         // Return the fragment with its bundle
@@ -176,17 +182,27 @@ public class SlideDateTimeDialogFragment extends DialogFragment implements DateF
         mIsClientSpecified24HourTime = args.getBoolean("isClientSpecified24HourTime");
         mIs24HourTime = args.getBoolean("is24HourTime");
         mTheme = args.getInt("theme");
+        mTabCount = args.getInt("tabCount");
         mIndicatorColor = args.getInt("indicatorColor");
+        mTitleResouce = args.getString("titleResouce");
     }
 
     private void setupViews(View v)
     {
         mViewPager = (CustomViewPager) v.findViewById(R.id.viewPager);
+        mTitle = (TextView) v.findViewById(R.id.picer_title);
         mSlidingTabLayout = (SlidingTabLayout) v.findViewById(R.id.slidingTabLayout);
         mButtonHorizontalDivider = v.findViewById(R.id.buttonHorizontalDivider);
         mButtonVerticalDivider = v.findViewById(R.id.buttonVerticalDivider);
         mOkButton = (Button) v.findViewById(R.id.okButton);
         mCancelButton = (Button) v.findViewById(R.id.cancelButton);
+
+        if (TextUtils.isEmpty(mTitleResouce)) {
+            mTitle.setVisibility(View.GONE);
+        } else {
+            mTitle.setVisibility(View.VISIBLE);
+            mTitle.setText(mTitleResouce);
+        }
     }
 
     private void customizeViews()

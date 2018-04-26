@@ -60,14 +60,16 @@ public class SampleActivity extends FragmentActivity
             {
                 new SlideDateTimePicker.Builder(getSupportFragmentManager())
                     .setListener(listener)
-                    .setInitialDate(new Date())
-                    //.setMinDate(minDate)
-                    //.setMaxDate(maxDate)
-                    //.setIs24HourTime(true)
-                    //.setTheme(SlideDateTimePicker.HOLO_DARK)
-                    //.setIndicatorColor(Color.parseColor("#990000"))
-                    .build()
-                    .show();
+                        .setInitialDate(new Date())
+                        //.setMinDate(minDate)
+                        //.setMaxDate(maxDate)
+                        .setIs24HourTime(true)
+                        .setTitle("自定义标题")
+                        .setTabCount(1)
+                        //.setTheme(SlideDateTimePicker.HOLO_DARK)
+                        //.setIndicatorColor(Color.parseColor("#990000"))
+                        .build()
+                        .show();
             }
         });
     }

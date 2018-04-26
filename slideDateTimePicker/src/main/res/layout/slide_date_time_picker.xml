@@ -5,6 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+    <TextView
+        android:id="@+id/picer_title"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:textSize="16sp"/>
 
     <com.github.jjobes.slidedatetimepicker.SlidingTabLayout
         android:id="@+id/slidingTabLayout"
